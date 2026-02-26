@@ -1,0 +1,94 @@
+Network Infrastructure Engineer (5 Years Experience)
+
+Name: XXX-YYY
+Location: XXX-CITY, XXX-COUNTRY
+Phone: +00-000-XXXX-XXXX
+Email: xxx.yyy@example.com
+
+LinkedIn: linkedin.com/in/xxx-yyy
+
+Professional Summary
+
+Network Infrastructure Engineer with over 5 years of experience in managing enterprise network environments, supporting network operations, and ensuring infrastructure reliability. Skilled in troubleshooting complex network issues, implementing secure connectivity solutions, and maintaining high network availability in corporate environments.
+
+Core Competencies
+
+LAN/WAN Administration
+
+Routing & Switching
+
+Network Monitoring
+
+Firewall & VPN Management
+
+TCP/IP & Network Security
+
+Incident & Problem Management
+
+Data Center Networking
+
+Network Documentation
+
+Professional Experience
+Network Infrastructure Engineer
+
+XXX-YYY-COMPANY-01, XXX-CITY, XXX-COUNTRY
+Jan 2021 – Present
+
+Managed enterprise LAN/WAN infrastructure across multiple office locations.
+
+Configured and maintained enterprise switches and routers.
+
+Monitored network performance using monitoring tools.
+
+Reduced network downtime through proactive maintenance.
+
+Implemented VLAN segmentation and routing optimization.
+
+Supported firewall rule management and VPN connectivity.
+
+Participated in infrastructure upgrade and migration projects.
+
+Network Operations Engineer
+
+XXX-YYY-COMPANY-02, XXX-CITY, XXX-COUNTRY
+Mar 2019 – Dec 2020
+
+Provided Level 2 network operational support.
+
+Troubleshot connectivity and performance issues.
+
+Performed device configuration backups and updates.
+
+Assisted in network deployment and expansion projects.
+
+Maintained network documentation and topology diagrams.
+
+Education
+
+Bachelor of Science in Information Technology
+XXX-YYY University, XXX-CITY
+
+Certifications
+
+Network Certification Level 1
+
+Network Certification Level 2
+
+Technical Skills
+
+Networking: TCP/IP, OSPF, VLAN, STP, VPN
+
+Hardware: Cisco Catalyst/Nexus, Juniper EX/MX, Arista 7000 series switches & routers
+
+Firewall: Fortinet FortiGate, Palo Alto PA series
+
+Tools: Tool-A, Tool-B, Tool-C
+
+OS: Linux, Windows Server
+
+Languages
+
+Korean — Native
+
+English — Professional Working Proficiency

@@ -1,0 +1,46 @@
+services:
+  # Backend (Flask app)
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ${GOOGLE_CREDENTIALS_FILE}:/opt/vertex-credentials.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/vertex-credentials.json
+    depends_on:
+      - llm
+
+  # Frontend (Vue + Vite dev server)
+  front:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    ports:
+      - "9919:9919"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - front_node_modules:/app/front/node_modules
+    depends_on:
+      - app
+
+  # Local LLM (Ollama)
+  llm:
+    image: ollama/ollama:latest
+    container_name: cv-compare-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["ollama serve & sleep 5 && ollama pull qwen2.5:3b && wait"]
+
+volumes:
+  ollama_data:
+  front_node_modules:

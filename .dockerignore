@@ -1,0 +1,10 @@
+.env
+.envrc
+.git
+.venv
+venv/
+__pycache__
+*.pyc
+front/node_modules/
+front/dist/
+*.md

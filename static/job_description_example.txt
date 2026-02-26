@@ -1,0 +1,71 @@
+Network Infrastructure Operations Engineer
+
+Job Title: Network Infrastructure Operations Engineer
+Department: IT Infrastructure / Network Operations
+Reports To: IT Infrastructure Manager / Network Operations Manager
+
+Job Summary
+
+The Network Infrastructure Operations Engineer is responsible for maintaining, monitoring, and supporting the organization’s network infrastructure to ensure high availability, performance, and security of enterprise systems. This role includes troubleshooting network issues, managing network devices, and supporting daily operational activities.
+
+Key Responsibilities
+
+Monitor and maintain LAN, WAN, WLAN, and data center network infrastructure.
+
+Configure, install, and support routers, switches, firewalls, and load balancers.
+
+Perform network troubleshooting and root cause analysis.
+
+Ensure network uptime and performance optimization.
+
+Manage IP addressing, VLANs, routing protocols, and network segmentation.
+
+Implement network security policies and access controls.
+
+Support incident, problem, and change management processes.
+
+Perform firmware upgrades, patching, and configuration backups.
+
+Collaborate with system, security, and cloud teams.
+
+Maintain technical documentation and network diagrams.
+
+Provide operational support and on-call troubleshooting when required.
+
+Required Qualifications
+
+Bachelor’s degree in Computer Science, Information Technology, or related field.
+
+3–6 years of experience in network operations or infrastructure support.
+
+Strong knowledge of TCP/IP networking concepts.
+
+Experience with enterprise networking equipment (Cisco Catalyst/Nexus, Juniper EX/MX, Arista 7000 series, Fortinet FortiGate, Palo Alto PA series).
+
+Understanding of routing and switching protocols (OSPF, BGP, STP).
+
+Experience with firewalls and VPN technologies.
+
+Knowledge of network monitoring tools.
+
+Preferred Certifications
+
+Network Certification Level 1 / Level 2
+
+Network Certification Level 3
+
+ITIL Foundation
+
+Key Skills
+
+Network troubleshooting
+
+Infrastructure monitoring
+
+Incident management
+
+Documentation
+
+Communication and teamwork
+
+Problem-solving skills
