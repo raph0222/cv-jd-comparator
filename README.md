@@ -64,9 +64,15 @@ Use Docker Compose to run everything (frontend + backend + local LLM).
 
 - Traces for LangChain model calls are sent to LangSmith when tracing is enabled.
 
+## CI/CD
+
+**Frontend** Cloudflare Pages : builds and deploy on push to `main`
+**Backend**  AWS EC2 : GitHub Actions builds the Docker image, pushes to AWS ECR, then SSHs into EC2 to pull and restart the container
+
 ## Settings
 
 - Typed runtime config is centralized in `backend/infrastructure/config/settings.py`.
+
 ## Usage
 
 - Focus only on skills, experience, and qualifications.
@@ -76,4 +82,3 @@ Use Docker Compose to run everything (frontend + backend + local LLM).
 ## Later updates
 
 - Add a backend preprocessing step to detect and redact personal/sensitive information (PII) before sending text to the AI model.
-- CI workflow will be added when deployed.
