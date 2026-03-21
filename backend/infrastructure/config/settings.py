@@ -4,6 +4,10 @@ from functools import lru_cache
 from typing import List, Optional
 
 
+def _env_bool(key: str, default: str = "false") -> bool:
+    val = os.environ.get(key, default)
+    return val.lower() == "true"
+
 @dataclass(frozen=True)
 class Settings:
     app_env: str
@@ -24,13 +28,13 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> "Settings":
-        cors_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "http://localhost:9919,http://127.0.0.1:9919")
+        cors_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 
         return cls(
             app_env=os.environ.get("APP_ENV", "development"),
             log_level=os.environ.get("LOG_LEVEL", "INFO"),
-            structured_logs=os.environ.get("STRUCTURED_LOGS", "false"),
-            langsmith_tracing=os.environ.get("LANGSMITH_TRACING", "false"),
+            structured_logs=_env_bool("STRUCTURED_LOGS", "false"),
+            langsmith_tracing=_env_bool("LANGSMITH_TRACING", "false"),
             langsmith_project=os.environ.get("LANGSMITH_PROJECT", ""),
             langsmith_api_key=os.environ.get("LANGSMITH_API_KEY", ""),
             langsmith_endpoint=os.environ.get("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"),
