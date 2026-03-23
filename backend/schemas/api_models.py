@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Mapping
 
+from backend.api_exceptions import BadRequest, JobDescriptionTooLong, ResumeTooLong
+
 
 @dataclass(frozen=True)
 class ModelSelection:
@@ -31,20 +33,16 @@ class CompareRequest:
         if payload is None:
             payload = {}
         if not isinstance(payload, Mapping):
-            raise ValueError("Request body must be a JSON object.")
+            raise BadRequest(detail="Request body must be a JSON object.")
 
         job_description = str(payload.get("job_description") or "").strip()
         resume = str(payload.get("resume") or "").strip()
         if not job_description or not resume:
-            raise ValueError("Both job_description and resume are required")
+            raise BadRequest(detail="Both job_description and resume are required")
         if len(job_description) > max_input_length:
-            raise ValueError(
-                f"job_description exceeds maximum length of {max_input_length} characters"
-            )
+            raise JobDescriptionTooLong()
         if len(resume) > max_input_length:
-            raise ValueError(
-                f"resume exceeds maximum length of {max_input_length} characters"
-            )
+            raise ResumeTooLong()
 
         return cls(job_description=job_description, resume=resume)
 
@@ -93,16 +91,4 @@ class CompareResponse:
             "reasoning": self.reasoning,
             "request_id": self.request_id,
             "models": self.models.to_dict(),
-        }
-
-
-@dataclass(frozen=True)
-class ErrorResponse:
-    code: str
-    message: str
-
-    def to_dict(self) -> Dict[str, str]:
-        return {
-            "code": self.code,
-            "message": self.message,
         }

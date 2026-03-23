@@ -14,6 +14,7 @@ def create_app() -> Flask:
     from dotenv import load_dotenv
     from flask_cors import CORS
 
+    from backend.error_handlers import register_error_handlers
     from backend.extensions import limiter
     from backend.infrastructure.config.settings import get_settings
     from backend.infrastructure.observability.langsmith import configure_langsmith
@@ -37,6 +38,7 @@ def create_app() -> Flask:
     CORS(flask_app, resources={r"/api/*": {"origins": cors_origins}})
 
     limiter.init_app(flask_app)
+    register_error_handlers(flask_app)
 
     @flask_app.route("/")
     def index():

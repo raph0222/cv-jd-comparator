@@ -14,7 +14,8 @@ def run_compare(payload: Any, client_ip: str = "unknown", request_id: str = "") 
     """Execute the compare use case.
 
     Returns the response dict on success.
-    Raises ValueError for validation errors; other exceptions propagate.
+    Raises APIException subclasses from payload validation, other exceptions propagate
+    to the Flask error handler with code 'error'
     """
     settings = get_settings()
     with trace_span("run_compare", request_id=request_id):
