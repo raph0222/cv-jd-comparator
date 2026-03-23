@@ -1,5 +1,7 @@
 *This is a personal GitHub project built to showcase this work in my portfolio.
 
+**Public demo:** You can visit [https://cv-jd-comparator.pages.dev/](https://cv-jd-comparator.pages.dev/) to test this project.
+
 # Introduction
 
 Resume/JD Comparator helps recruiters and hiring teams quickly evaluate resume-to-role fit.
