@@ -7,6 +7,7 @@ export const API_ERROR_MESSAGES = {
   job_description_too_long: 'The job description is too long. Shorten it and try again.',
   resume_too_long: 'The resume is too long. Shorten it and try again.',
   rate_limit_exceeded: 'Too many requests in a short time. Please wait and try again.',
+  not_found: 'The requested item could not be found. It may have been deleted.',
   service_unavailable: 'Service is down, try again later.',
   error: 'Something went wrong. Please try again.'
 }

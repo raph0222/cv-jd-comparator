@@ -8,6 +8,7 @@ import os
 from flask import Flask
 
 from backend.views.compare_view import compare_bp
+from backend.views.rag_views import rag_bp
 
 
 def create_app() -> Flask:
@@ -56,6 +57,7 @@ def create_app() -> Flask:
         return {"status": "ok"}, 200
 
     flask_app.register_blueprint(compare_bp)
+    flask_app.register_blueprint(rag_bp)
 
     logger.info(
         "Backend app initialized app_env=%s langsmith_tracing=%s",

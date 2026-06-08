@@ -25,9 +25,16 @@ ENV/
 env.bak/
 venv.bak/
 
+.cache/
+.claude/
+
 .vscode/
 .pypirc
 
 # Frontend (Vue)
 front/node_modules/
 front/dist/
+
+# RAG persistence (SQLite + Qdrant local volumes)
+data/
+qdrant_data/

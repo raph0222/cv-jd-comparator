@@ -4,26 +4,46 @@
 
 # Introduction
 
-Resume/JD Comparator helps recruiters and hiring teams quickly evaluate resume-to-role fit.
+Resume/JD Comparator is an AI-assisted tool that helps recruiters and hiring teams quickly evaluate resume-to-role fit.
+It exposes **two features**:
+
+### 1. Compare a JD and a resume
+
 You paste a **job description** and a **candidate resume**, and the app returns a structured assessment with:
 
 - overall fit score
 - key matching strengths
 - concise reasoning grounded in the provided documents
 
+This is a fast first-pass screening aid, or a quick way to check whether a single resume matches a target job. It runs a single LLM scoring call and returns strict JSON.
+
 ![CV Comparator Screen](static/cv-comparator-screen.png)
 
-The goal is to provide a fast first-pass screening aid, or to quickly check whether a resume matches your target job.
+### 2. Find the best candidates for a Job Description (RAG system)
+
+You **pick a job description** already saved in the system, and the app will find the best-matching candidates from the pool of resumes.
+
+It works in two steps: first it quickly narrows the whole resume pool down to a short list of the most relevant ones, then it runs the deeper AI review (the same one used in feature 1) on just that short list to rank them. This way the heavier AI work only runs on candidates that are actually worth a closer look.
+
+1. **RAG pre-filter** — the JD is embedded and matched against all stored resumes in **Qdrant**
+2. **LLM analysis** — each shortlisted resume is run through the same Compare pipeline, and ranked by score
+
+Resumes and job descriptions are added from the **"Add a JD/Resume"** tab.
+
+![CV Comparator Screen RAG Feature](static/cv-comparator-screen-new-feature.png)
 
 # Structure
 
-- **Frontend**: Vue 3 + Vite + Tailwind app in `front/`.
-- **Backend**: Python (Flask) pipeline that sends job description + resume text directly to one LLM scoring call and returns strict JSON.
+- **Frontend**: Vue 3 + Vite + Tailwind
+- **Backend**: Python (Flask)
+- **LLM scoring**: a single LLM call returns strict JSON for both features.
+- **RAG store**: **Qdrant** vector database holding separate `resumes` and `job_descriptions` collections.
+- **Document store**: SQLite holds the raw text of each resume/JD plus the Qdrant chunk ids generated for it.
 - **LLM runtime**: local Ollama (`llm` Docker service) or Gemini via Vertex AI.
 
 ## Run locally with Docker
 
-Use Docker Compose to run everything (frontend + backend + local LLM).
+Use Docker Compose to run everything (frontend + backend + local LLM + Qdrant vector store).
 
 1. Copy the env template, and fill the values:
 
@@ -40,6 +60,18 @@ Use Docker Compose to run everything (frontend + backend + local LLM).
 3. Open the app:
    - Frontend: [http://localhost:9919](http://localhost:9919)
    - Backend API: `http://localhost:5000`
+   - Qdrant dashboard: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
+
+4. **Seed the database + RAG store** (required for the "Find the Best Match" feature).
+   The "Find the Best Match" feature needs job descriptions and resumes already stored
+   and embedded. Run the populate script once against the running backend to download
+   a sample of resumes + job descriptions from HuggingFace and ingest them
+   (into both SQLite and Qdrant):
+
+   ```bash
+   python scripts/populate.py
+   ```
+   You can also add documents one at a time from the **"Add a JD/Resume"** tab in the UI.
 
 ## Use Gemini with Google Cloud (Vertex AI)
 
@@ -80,7 +112,3 @@ Use Docker Compose to run everything (frontend + backend + local LLM).
 - Focus only on skills, experience, and qualifications.
 - Pasted job description and resume are sent as-is to the AI provider. (see later updates below)
 - Constrain outputs to strict JSON objects.
-
-## Later updates
-
-- Add a backend preprocessing step to detect and redact personal/sensitive information (PII) before sending text to the AI model.

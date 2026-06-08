@@ -51,6 +51,12 @@ class ResumeTooLong(APIException):
     default_code = "resume_too_long"
 
 
+class NotFound(APIException):
+    status_code = 404
+    default_detail = "The requested resource was not found."
+    default_code = "not_found"
+
+
 class InternalError(APIException):
     status_code = 500
     default_detail = "Comparison failed due to an internal error."

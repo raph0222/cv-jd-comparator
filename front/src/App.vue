@@ -4,29 +4,53 @@
       <h1 class="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
         Resume/JD Comparator
       </h1>
-      <p class="mt-2 text-sm text-slate-600">
-        Paste the job description and the candidate's resume, then click Compare to see the match.
-      </p>
-      <div class="mt-4">
-        <button
-          type="button"
-          :disabled="isLoading || isExamplesLoading"
-          class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
-          @click="onFillExamples"
-        >
-          Test with a fake resume and a random job description.
+
+      <nav class="mt-4 flex gap-1 border-b border-slate-200">
+        <button type="button" :class="tabClass('compare')" @click="activeTab = 'compare'">
+          Compare JD/Resume
         </button>
+        <button type="button" :class="tabClass('candidates')" @click="activeTab = 'candidates'">
+          Find the Best Match for a JD
+        </button>
+        <button type="button" :class="tabClass('database')" @click="activeTab = 'database'">
+          Add a JD/Resume to the system
+        </button>
+      </nav>
+
+      <div v-show="activeTab === 'compare'">
+        <p class="mt-4 text-sm text-slate-600">
+          Paste the job description and the candidate's resume, then click Compare to see the match.
+        </p>
+        <div class="mt-4">
+          <button
+            type="button"
+            :disabled="isLoading || isExamplesLoading"
+            class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
+            @click="onFillExamples"
+          >
+            Test with a fake resume and a random job description.
+          </button>
+        </div>
+
+        <CompareInputs
+          v-model:job="job"
+          v-model:resume="resume"
+          :disabled="isLoading || isExamplesLoading"
+        />
+
+        <CompareActions @compare="onCompare" />
+
+        <CompareResult />
       </div>
 
-      <CompareInputs
-        v-model:job="job"
-        v-model:resume="resume"
-        :disabled="isLoading || isExamplesLoading"
-      />
+      <div v-show="activeTab === 'candidates'" class="mt-4 space-y-4">
+        <JobDescriptionSelector />
+        <CandidateRankingResult />
+      </div>
 
-      <CompareActions @compare="onCompare" />
-
-      <CompareResult />
+      <div v-show="activeTab === 'database'" class="mt-4 space-y-4">
+        <IngestPanel />
+      </div>
     </main>
     <footer class="mx-auto mb-4 w-full max-w-4xl px-4 md:px-6">
       <p class="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
@@ -42,6 +66,9 @@ import { mapGetters } from 'vuex'
 import CompareActions from './components/CompareActions.vue'
 import CompareInputs from './components/CompareInputs.vue'
 import CompareResult from './components/CompareResult.vue'
+import CandidateRankingResult from './components/rag/CandidateRankingResult.vue'
+import IngestPanel from './components/rag/IngestPanel.vue'
+import JobDescriptionSelector from './components/rag/JobDescriptionSelector.vue'
 import {
   COMPARE_PANEL_OPEN,
   COMPARE_RESET,
@@ -55,10 +82,14 @@ export default {
   components: {
     CompareActions,
     CompareInputs,
-    CompareResult
+    CompareResult,
+    CandidateRankingResult,
+    IngestPanel,
+    JobDescriptionSelector
   },
   data() {
     return {
+      activeTab: 'compare',
       job: '',
       resume: ''
     }
@@ -67,6 +98,15 @@ export default {
     ...mapGetters(['isLoading', 'isExamplesLoading'])
   },
   methods: {
+    tabClass(tab) {
+      const active = this.activeTab === tab
+      return [
+        '-mb-px border-b-2 px-3 py-2 text-sm font-medium transition',
+        active
+          ? 'border-slate-900 text-slate-900'
+          : 'border-transparent text-slate-500 hover:text-slate-700'
+      ]
+    },
     checkInputs() {
       return Boolean(this.job.trim() && this.resume.trim())
     },

@@ -1,3 +1,5 @@
+name: cv-compare
+
 services:
   # Backend (Flask app)
   app:
@@ -8,11 +10,15 @@ services:
       - .env
     volumes:
       - .:/app
+      - ./data:/app/data
       - ${GOOGLE_CREDENTIALS_FILE}:/opt/vertex-credentials.json:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/opt/vertex-credentials.json
     depends_on:
-      - llm
+      llm:
+        condition: service_started
+      qdrant:
+        condition: service_started
 
   # Frontend (Vue + Vite dev server)
   front:
@@ -41,6 +47,16 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command: ["ollama serve & sleep 5 && ollama pull qwen2.5:3b && wait"]
 
+  qdrant:
+    image: qdrant/qdrant:v1.18.2
+    container_name: cv-compare-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # REST API
+    volumes:
+      - qdrant_data:/qdrant/storage
+
 volumes:
   ollama_data:
   front_node_modules:
+  qdrant_data:

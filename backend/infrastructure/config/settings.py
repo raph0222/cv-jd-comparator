@@ -25,6 +25,12 @@ class Settings:
     google_cloud_location: str
     max_input_length: int
     rate_limit: str
+    qdrant_host: str
+    qdrant_port: int
+    sqlite_path: str
+    embedding_model: str
+    rag_top_k_prefilter: int
+    rag_top_k_final: int
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -46,6 +52,12 @@ class Settings:
             google_cloud_location=os.environ.get("GOOGLE_CLOUD_LOCATION", "global"),
             max_input_length=int(os.environ.get("MAX_INPUT_LENGTH") or "50000"),
             rate_limit=os.environ.get("RATE_LIMIT", ""),
+            qdrant_host=os.environ.get("QDRANT_HOST", "qdrant"),
+            qdrant_port=int(os.environ.get("QDRANT_PORT") or "6333"),
+            sqlite_path=os.environ.get("SQLITE_PATH", "/app/data/cvcompare.db"),
+            embedding_model=os.environ.get("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
+            rag_top_k_prefilter=int(os.environ.get("RAG_TOP_K_PREFILTER") or "3"),
+            rag_top_k_final=int(os.environ.get("RAG_TOP_K_FINAL") or "3"),
         )
 
     @property

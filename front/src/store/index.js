@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import axios from '../axios/axios.js'
 import { handleErrorMessage } from '../utils.js'
+import rag from './modules/rag.js'
 import {
   COMPARE_ERROR,
   COMPARE_PANEL_OPEN,
@@ -147,5 +148,8 @@ export default createStore({
   }),
   mutations,
   actions,
-  getters
+  getters,
+  modules: {
+    rag
+  }
 })
