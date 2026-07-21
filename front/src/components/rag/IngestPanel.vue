@@ -38,7 +38,7 @@
     <div class="mt-3 flex justify-end">
       <button
         type="button"
-        :disabled="ragLoading || !canSubmit"
+        :disabled="ragLoading || !canSubmit || isBackendOffline"
         class="rounded-md bg-slate-900 px-4 py-2 text-xs font-semibold tracking-wide text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
         @click="onSubmit"
       >
@@ -63,6 +63,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isBackendOffline']),
     ...mapGetters('rag', ['ragLoading', 'ragError', 'ragErrorMessage']),
     isResume() {
       return this.docType === 'resume'

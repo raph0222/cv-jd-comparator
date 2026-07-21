@@ -27,7 +27,7 @@
       </div>
       <button
         type="button"
-        :disabled="ragLoading || !selectedId"
+        :disabled="ragLoading || !selectedId || isBackendOffline"
         class="rounded-md bg-slate-900 px-4 py-2 text-xs font-semibold tracking-wide text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
         @click="onFind"
       >
@@ -49,9 +49,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isBackendOffline']),
     ...mapGetters('rag', ['jobDescriptions', 'ragLoading'])
   },
   created() {
+    if (this.isBackendOffline) return
     this.fetchJobDescriptions().catch(() => {})
   },
   methods: {

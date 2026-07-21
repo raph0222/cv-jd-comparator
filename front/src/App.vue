@@ -1,9 +1,24 @@
 <template>
   <div class="flex min-h-screen flex-col bg-slate-50">
     <main class="mx-auto w-full max-w-4xl flex-1 px-4 py-5 md:px-6 md:py-6">
-      <h1 class="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-        Resume/JD Comparator
-      </h1>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h1 class="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+          Resume/JD Comparator
+        </h1>
+        <BackendStatus />
+      </div>
+
+      <div
+        v-if="isBackendOffline"
+        class="mt-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"
+      >
+        <p class="font-semibold">Live demo paused</p>
+        <p class="mt-1 text-rose-700">
+          This server is temporarily turned offline to keep hosting costs low, so analysis features
+          are currently unavailable.
+        </p>
+        <p class="mt-1 text-rose-700">Feel free to reach out.</p>
+      </div>
 
       <nav class="mt-4 flex gap-1 border-b border-slate-200">
         <button type="button" :class="tabClass('compare')" @click="activeTab = 'compare'">
@@ -24,7 +39,7 @@
         <div class="mt-4">
           <button
             type="button"
-            :disabled="isLoading || isExamplesLoading"
+            :disabled="isLoading || isExamplesLoading || isBackendOffline"
             class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
             @click="onFillExamples"
           >
@@ -35,7 +50,7 @@
         <CompareInputs
           v-model:job="job"
           v-model:resume="resume"
-          :disabled="isLoading || isExamplesLoading"
+          :disabled="isLoading || isExamplesLoading || isBackendOffline"
         />
 
         <CompareActions @compare="onCompare" />
@@ -63,6 +78,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BackendStatus from './components/BackendStatus.vue'
 import CompareActions from './components/CompareActions.vue'
 import CompareInputs from './components/CompareInputs.vue'
 import CompareResult from './components/CompareResult.vue'
@@ -80,6 +96,7 @@ import {
 export default {
   name: 'App',
   components: {
+    BackendStatus,
     CompareActions,
     CompareInputs,
     CompareResult,
@@ -95,7 +112,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading', 'isExamplesLoading'])
+    ...mapGetters(['isLoading', 'isExamplesLoading', 'isBackendOffline'])
   },
   methods: {
     tabClass(tab) {

@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import axios from '../axios/axios.js'
-import { handleErrorMessage } from '../utils.js'
+import { handleErrorMessage, isBackendOffline } from '../utils.js'
 import rag from './modules/rag.js'
 import {
   COMPARE_ERROR,
@@ -134,7 +134,8 @@ const getters = {
   error: (state) => state.error,
   errorMessage: (state) => state.errorMessage,
   isComparePanelOpen: (state) => state.isComparePanelOpen,
-  isExamplesLoading: (state) => state.isExamplesLoading
+  isExamplesLoading: (state) => state.isExamplesLoading,
+  isBackendOffline: () => isBackendOffline
 }
 
 export default createStore({
